@@ -8,13 +8,21 @@ Retrive strike and instrument token detail from redis for each symbol search
 
 import redis
 import json
+import os
+
+
+REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+REDIS_PORT = os.environ.get('REDIS_PORT', 6379)
+REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD', None)
+REDIS_DB = os.environ.get('REDIS_DB', 0)
+
 
 class InstrumentDumpFetch():
     
     def __init__(self):
         # Default redis port connection
         # Port no and host be edited by user or will make both as acceptable argument in later release 
-        self.conn = redis.StrictRedis(host='localhost', port=6379)
+        self.conn = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD, db=REDIS_DB)
 
     def data_dump(self, symbol, instrument_data):
         """
